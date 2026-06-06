@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firma de Contrato de Vivienda</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="screen screen-home is-active" id="screen-home" aria-labelledby="home-title">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">Vivienda conectada</p>
+            <h1 id="home-title">Firma de contrato</h1>
+          </div>
+          <span class="status-pill" id="global-status">Pendiente de firmas</span>
+        </div>
+
+        <div class="home-layout">
+          <section class="contract-summary" aria-label="Resumen del contrato">
+            <div class="image-panel" aria-hidden="true">
+              <div class="house-visual">
+                <span class="roof"></span>
+                <span class="body"></span>
+                <span class="door"></span>
+                <span class="window one"></span>
+                <span class="window two"></span>
+              </div>
+            </div>
+            <div class="summary-copy">
+              <p class="section-label">Acuerdo digital</p>
+              <h2>Contrato de arrendamiento listo para revisar y firmar</h2>
+              <p>
+                Centraliza la informacion del inmueble, valida a las partes y registra las firmas
+                del arrendador y del residente antes de cerrar el acuerdo.
+              </p>
+            </div>
+          </section>
+
+          <nav class="action-grid" aria-label="Opciones principales">
+            <button class="action-button" type="button" data-panel="contract">
+              <span class="button-icon">C</span>
+              <span>
+                <strong>Contrato de arrendamiento</strong>
+                <small>Revisar condiciones principales</small>
+              </span>
+            </button>
+            <button class="action-button" type="button" data-panel="property">
+              <span class="button-icon">I</span>
+              <span>
+                <strong>Inmueble</strong>
+                <small>Ver datos de la vivienda</small>
+              </span>
+            </button>
+            <button class="action-button" type="button" data-screen="landlord">
+              <span class="button-icon">A</span>
+              <span>
+                <strong>Firma del arrendador</strong>
+                <small>Registrar autorizacion del propietario</small>
+              </span>
+            </button>
+            <button class="action-button" type="button" data-screen="resident">
+              <span class="button-icon">R</span>
+              <span>
+                <strong>Firma del residente</strong>
+                <small>Aceptar y firmar como arrendatario</small>
+              </span>
+            </button>
+          </nav>
+        </div>
+
+        <section class="detail-panel" id="detail-panel" aria-live="polite">
+          <div>
+            <p class="section-label" id="panel-label">Siguiente paso</p>
+            <h2 id="panel-title">Selecciona una opcion para continuar</h2>
+            <p id="panel-text">
+              Puedes revisar el contrato, consultar el inmueble o abrir la pantalla de firma de
+              cada parte.
+            </p>
+          </div>
+          <dl class="progress-list">
+            <div>
+              <dt>Residente</dt>
+              <dd id="resident-progress">Sin firma</dd>
+            </div>
+            <div>
+              <dt>Arrendador</dt>
+              <dd id="landlord-progress">Sin firma</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="celo-panel" aria-labelledby="celo-title">
+          <div>
+            <p class="section-label">Celo smart contracts</p>
+            <h2 id="celo-title">Preparado para registrar el acuerdo on-chain</h2>
+            <p>
+              La firma se guarda localmente en esta primera version. Cuando el contrato este
+              desplegado en Celo Sepolia o Mainnet, esta app podra enviar la confirmacion usando
+              network fee en stablecoin.
+            </p>
+          </div>
+          <div class="chain-grid">
+            <div>
+              <span>Wallet</span>
+              <strong id="wallet-status">No conectada</strong>
+            </div>
+            <div>
+              <span>Red</span>
+              <strong id="chain-status">Sin detectar</strong>
+            </div>
+            <div>
+              <span>Contrato</span>
+              <strong id="contract-status">Pendiente de despliegue</strong>
+            </div>
+            <div>
+              <span>Network fee</span>
+              <strong>USDm</strong>
+            </div>
+          </div>
+          <div class="celo-actions">
+            <button class="secondary-button" id="connect-wallet" type="button">Conectar wallet</button>
+            <button class="primary-button" id="anchor-contract" type="button">Preparar registro</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen sign-screen" id="screen-resident" aria-labelledby="resident-title">
+        <button class="back-button" type="button" data-screen="home">Volver</button>
+        <div class="sign-layout">
+          <section class="sign-copy">
+            <p class="eyebrow">Firma del residente</p>
+            <h1 id="resident-title">Aceptacion del arrendatario</h1>
+            <p>
+              Confirma que revisaste las condiciones del contrato y firma para continuar con el
+              proceso de arrendamiento.
+            </p>
+            <ul class="check-list">
+              <li>Contrato de arrendamiento revisado</li>
+              <li>Datos del inmueble verificados</li>
+              <li>Compromisos de pago aceptados</li>
+            </ul>
+          </section>
+
+          <form class="signature-form" data-role="resident">
+            <label>
+              Nombre completo
+              <input name="name" type="text" placeholder="Ej. Laura Martinez" required />
+            </label>
+            <label>
+              Documento
+              <input name="document" type="text" placeholder="Numero de identificacion" required />
+            </label>
+            <label class="acceptance">
+              <input name="accepted" type="checkbox" required />
+              <span>Acepto firmar el contrato como residente.</span>
+            </label>
+            <div class="signature-box">
+              <canvas width="680" height="220" aria-label="Lienzo de firma del residente"></canvas>
+              <span class="canvas-hint">Firma aqui</span>
+            </div>
+            <div class="form-actions">
+              <button class="secondary-button" type="button" data-clear>Limpiar firma</button>
+              <button class="primary-button" type="submit">Guardar firma</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="screen sign-screen" id="screen-landlord" aria-labelledby="landlord-title">
+        <button class="back-button" type="button" data-screen="home">Volver</button>
+        <div class="sign-layout">
+          <section class="sign-copy">
+            <p class="eyebrow">Firma del arrendador</p>
+            <h1 id="landlord-title">Autorizacion del propietario</h1>
+            <p>
+              Registra la firma del arrendador para validar que el inmueble y las condiciones
+              pactadas quedan aprobadas.
+            </p>
+            <ul class="check-list">
+              <li>Identidad del arrendador validada</li>
+              <li>Disponibilidad del inmueble confirmada</li>
+              <li>Terminos de entrega aceptados</li>
+            </ul>
+          </section>
+
+          <form class="signature-form" data-role="landlord">
+            <label>
+              Nombre completo
+              <input name="name" type="text" placeholder="Ej. Andres Gomez" required />
+            </label>
+            <label>
+              Documento
+              <input name="document" type="text" placeholder="Numero de identificacion" required />
+            </label>
+            <label class="acceptance">
+              <input name="accepted" type="checkbox" required />
+              <span>Acepto firmar el contrato como arrendador.</span>
+            </label>
+            <div class="signature-box">
+              <canvas width="680" height="220" aria-label="Lienzo de firma del arrendador"></canvas>
+              <span class="canvas-hint">Firma aqui</span>
+            </div>
+            <div class="form-actions">
+              <button class="secondary-button" type="button" data-clear>Limpiar firma</button>
+              <button class="primary-button" type="submit">Guardar firma</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
